@@ -5,7 +5,9 @@ import xyz.erupt.annotation.Erupt;
 import xyz.erupt.annotation.EruptField;
 import xyz.erupt.annotation.sub_erupt.Power;
 import xyz.erupt.annotation.sub_field.Edit;
+import xyz.erupt.annotation.sub_field.EditType;
 import xyz.erupt.annotation.sub_field.View;
+import xyz.erupt.annotation.sub_field.sub_edit.DateType;
 import xyz.erupt.annotation.sub_field.sub_edit.Search;
 
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import javax.persistence.Table;
 
 @Erupt(
         name = "账户消息",
+        dataProxy = AcctMailDateTimeDataProxy.class,
         primaryKeyCol = "mail_id",
         orderBy = "AcctMail.mail_id desc",
         power = @Power(importable = true, export = true)
@@ -22,13 +25,25 @@ import javax.persistence.Table;
 @Table(name = "acct_mail")
 @Entity
 public class AcctMail {
+
+    public AcctMail() {}
+
+    public AcctMail(String acctId, String title, String ps, String content) {
+        this.acct_id = acctId;
+        this.title = title;
+        this.time = TimeUtil.now();
+        this.pub_day = TimeUtil.today();
+        this.ps = ps;
+        this.content = content;
+    }
+
     @Id
     @GeneratedValue(generator = "generator")
     @GenericGenerator(name = "generator", strategy = "identity")
     @EruptField(
             views = @View(title = "通知ID")
     )
-    private int mail_id;
+    private Integer mail_id;
 
     @EruptField(
             views = @View(title = "账户ID"),
@@ -43,14 +58,12 @@ public class AcctMail {
     private String title;
 
     @EruptField(
-            views = @View(title = "发布时间"),
-            edit = @Edit(title = "发布时间")
+            views = @View(title = "发布时间")
     )
     private String time;
 
     @EruptField(
-            views = @View(title = "发布日期"),
-            edit = @Edit(title = "发布日期")
+            views = @View(title = "发布日期")
     )
     private String pub_day;
 
@@ -65,4 +78,44 @@ public class AcctMail {
             edit = @Edit(title = "内容")
     )
     private String content;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getPubDay() {
+        return pub_day;
+    }
+
+    public void setPubDay(String pub_day) {
+        this.pub_day = pub_day;
+    }
+
+    public Integer getMail_id() {
+        return mail_id;
+    }
+
+    public String getAcct_id() {
+        return acct_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getPub_day() {
+        return pub_day;
+    }
+
+    public String getPs() {
+        return ps;
+    }
+
+    public String getContent() {
+        return content;
+    }
 }

@@ -5,7 +5,9 @@ import xyz.erupt.annotation.Erupt;
 import xyz.erupt.annotation.EruptField;
 import xyz.erupt.annotation.sub_erupt.Power;
 import xyz.erupt.annotation.sub_field.Edit;
+import xyz.erupt.annotation.sub_field.EditType;
 import xyz.erupt.annotation.sub_field.View;
+import xyz.erupt.annotation.sub_field.sub_edit.DateType;
 import xyz.erupt.annotation.sub_field.sub_edit.Search;
 
 import javax.persistence.Entity;
@@ -16,6 +18,7 @@ import java.util.Date;
 
 @Erupt(
         name = "系统消息",
+        dataProxy = TotalMailDateTimeDataProxy.class,
         primaryKeyCol = "mail_id",
         orderBy = "TotalMail.mail_id desc",
         power = @Power(importable = true, export = true)
@@ -29,7 +32,7 @@ public class TotalMail {
     @EruptField(
             views = @View(title = "通知ID")
     )
-    private int mail_id;
+    private Integer mail_id;
 
     @EruptField(
             views = @View(title = "主题"),
@@ -38,14 +41,12 @@ public class TotalMail {
     private String title;
 
     @EruptField(
-            views = @View(title = "发布时间"),
-            edit = @Edit(title = "发布时间")
+            views = @View(title = "发布时间")
     )
     private String time;
 
     @EruptField(
-            views = @View(title = "发布日期"),
-            edit = @Edit(title = "发布日期")
+            views = @View(title = "发布日期")
     )
     private String pub_day;
 
@@ -61,4 +62,19 @@ public class TotalMail {
     )
     private String content;
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getPubDay() {
+        return pub_day;
+    }
+
+    public void setPubDay(String pub_day) {
+        this.pub_day = pub_day;
+    }
 }

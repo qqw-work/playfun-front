@@ -14,9 +14,11 @@ import xyz.erupt.annotation.sub_field.sub_edit.VL;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Erupt(
-        name = "账户消息",
+        name = "空投资源",
+        dataProxy = MailResourceDataProxy.class,
         primaryKeyCol = "mail_id",
         orderBy = "MailResource.mail_id desc",
         power = @Power(importable = true, export = true)
@@ -29,7 +31,7 @@ public class MailResource {
             views = @View(title = "消息ID"),
             edit = @Edit(title = "消息ID", notNull = true, search = @Search)
     )
-    private int mail_id;
+    private Integer mail_id;
 
     @EruptField(
             views = @View(title = "账户ID"),
@@ -72,4 +74,62 @@ public class MailResource {
             )
     )
     private Integer res_flag;
+
+    @Transient
+    @EruptField(
+            edit = @Edit(title = "主题")
+    )
+    private String title;
+
+    @Transient
+    @EruptField(
+            edit = @Edit(title = "附言")
+    )
+    private String ps;
+
+    @Transient
+    @EruptField(
+            edit = @Edit(title = "内容")
+    )
+    private String content;
+
+    public Integer getMailId() {
+        return mail_id;
+    }
+
+    public void setMailId(Integer mailId) {
+        this.mail_id = mailId;
+    }
+
+    public String getAcctId() {
+        return acct_id;
+    }
+
+    public void setAcctId(String acctId) {
+        this.acct_id = acctId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPs() {
+        return ps;
+    }
+
+    public void setPs(String ps) {
+        this.ps = ps;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

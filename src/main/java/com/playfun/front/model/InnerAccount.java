@@ -67,7 +67,7 @@ public class InnerAccount {
                     )
             )
     )
-    private int state;
+    private Integer state;
 
     @EruptField(
             views = @View(title = "更新时间")

@@ -93,7 +93,7 @@ public class UsdtApply {
                             @VL(value = "1", label = "是")
                     }))
     )
-    private int is_today;
+    private Integer is_today;
 
     @EruptField(
             views = @View(title = "审核"),
@@ -108,7 +108,7 @@ public class UsdtApply {
                     )
             )
     )
-    private int verify;
+    private Integer verify;
 
     @EruptField(
             views = @View(title = "转账Hash")
@@ -127,7 +127,7 @@ public class UsdtApply {
             )
 
     )
-    private int done;
+    private Integer done;
 
     @EruptField(
             views = @View(title = "更新时间")
