@@ -1,4 +1,4 @@
-package com.playfun.front;
+package com.playfun.front.model;
 
 import xyz.erupt.annotation.Erupt;
 import xyz.erupt.annotation.EruptField;
@@ -14,10 +14,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Erupt(
-        name = "Usdt提现",
-        primaryKeyCol = "id",
+        name = "USDT提现",
         orderBy = "UsdtApply.id desc"
 )
 @Table(name = "usdt_apply")
@@ -26,16 +26,12 @@ public class UsdtApply {
 
     @Id
     @Column(name = "id")
-    @EruptField(
-            views = @View(title = "自增ID"),
-            edit = @Edit(title = "自增ID", notNull = true, search = @Search)
-    )
+    @EruptField
     private String id;
 
 
     @EruptField(
-            views = @View(title = "批次ID"),
-            edit = @Edit(title = "批次ID", notNull = true, search = @Search)
+            views = @View(title = "批次ID")
     )
     private String batch_id;
 
@@ -46,8 +42,17 @@ public class UsdtApply {
     private String acct_id;
 
     @EruptField(
-            views = @View(title = "链ID"),
-            edit = @Edit(title = "链ID", notNull = true, search = @Search)
+            views = @View(title = "链"),
+            edit = @Edit(title = "链",
+                    notNull = true,
+                    readonly = @Readonly,
+                    type = EditType.CHOICE,
+                    choiceType = @ChoiceType(
+                            vl = {
+                                    @VL(value = "56", label = "BSC"),
+                                    @VL(value = "1", label = "Eth")
+                            }
+                    ))
     )
     private String chain_id;
 
@@ -64,22 +69,19 @@ public class UsdtApply {
     private String out_wallet;
 
     @EruptField(
-            views = @View(title = "usdt"),
-            edit = @Edit(title = "usdt", notNull = true, search = @Search)
+            views = @View(title = "到账USDT")
     )
-    private float usdt;
+    private BigDecimal usdt;
 
     @EruptField(
-            views = @View(title = "ht"),
-            edit = @Edit(title = "ht", notNull = true, search = @Search)
+            views = @View(title = "花费HT")
     )
-    private int ht;
+    private Integer ht;
 
     @EruptField(
-            views = @View(title = "费用"),
-            edit = @Edit(title = "费用", notNull = true, search = @Search)
+            views = @View(title = "费用")
     )
-    private int fee;
+    private Integer fee;
 
     @EruptField(
             views = @View(title = "是否当日到账"),
@@ -87,27 +89,43 @@ public class UsdtApply {
                     readonly = @Readonly,
                     type = EditType.CHOICE,
                     choiceType = @ChoiceType(vl = {
-                            @VL(value = "0", label = "是"),
-                            @VL(value = "1", label = "否")
+                            @VL(value = "0", label = "否"),
+                            @VL(value = "1", label = "是")
                     }))
     )
     private int is_today;
 
     @EruptField(
             views = @View(title = "审核"),
-            edit = @Edit(title = "审核", notNull = true, search = @Search)
+            edit = @Edit(title = "审核",
+                    notNull = true,
+                    search = @Search,
+                    type = EditType.CHOICE,
+                    choiceType = @ChoiceType(vl = {
+                            @VL(value = "0", label = "否"),
+                            @VL(value = "1", label = "是")
+                    }
+                    )
+            )
     )
     private int verify;
 
     @EruptField(
-            views = @View(title = "转账Hash"),
-            edit = @Edit(title = "转账Hash", notNull = true, search = @Search)
+            views = @View(title = "转账Hash")
     )
     private String hash_value;
 
     @EruptField(
             views = @View(title = "是否完成"),
-            edit = @Edit(title = "是否完成", readonly = @Readonly, search = @Search)
+            edit = @Edit( title = "是否完成",
+                    readonly = @Readonly,
+                    type = EditType.CHOICE,
+                    choiceType = @ChoiceType(vl = {
+                            @VL(value = "0", label = "未完成"),
+                            @VL(value = "1", label = "已完成")
+                    })
+            )
+
     )
     private int done;
 

@@ -14,7 +14,7 @@ window.eruptSiteConfig = {
   	//logo路径
     logoPath: "erupt.svg",
   	//logo文字
-    logoText: "p",
+    logoText: "后台管理",
   	//注册页地址(仅是一个链接，需要自定义实际样式)
   	registerPage: "",
   	//自定义导航栏按钮，配置后将会出现在页面右上角
