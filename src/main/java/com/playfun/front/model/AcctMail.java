@@ -5,15 +5,10 @@ import xyz.erupt.annotation.Erupt;
 import xyz.erupt.annotation.EruptField;
 import xyz.erupt.annotation.sub_erupt.Power;
 import xyz.erupt.annotation.sub_field.Edit;
-import xyz.erupt.annotation.sub_field.EditType;
 import xyz.erupt.annotation.sub_field.View;
-import xyz.erupt.annotation.sub_field.sub_edit.DateType;
 import xyz.erupt.annotation.sub_field.sub_edit.Search;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Erupt(
         name = "账户消息",
@@ -38,7 +33,7 @@ public class AcctMail {
     }
 
     @Id
-    @GeneratedValue(generator = "generator")
+    @GeneratedValue(generator = "generator", strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "generator", strategy = "identity")
     @EruptField(
             views = @View(title = "通知ID")
@@ -79,16 +74,11 @@ public class AcctMail {
     )
     private String content;
 
-    public String getTime() {
-        return time;
-    }
+
+    //getter setter
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getPubDay() {
-        return pub_day;
     }
 
     public void setPubDay(String pub_day) {
@@ -105,6 +95,10 @@ public class AcctMail {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     public String getPub_day() {

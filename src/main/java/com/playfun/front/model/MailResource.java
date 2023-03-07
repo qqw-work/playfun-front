@@ -5,7 +5,6 @@ import xyz.erupt.annotation.EruptField;
 import xyz.erupt.annotation.sub_erupt.Power;
 import xyz.erupt.annotation.sub_field.Edit;
 import xyz.erupt.annotation.sub_field.EditType;
-import xyz.erupt.annotation.sub_field.Readonly;
 import xyz.erupt.annotation.sub_field.View;
 import xyz.erupt.annotation.sub_field.sub_edit.ChoiceType;
 import xyz.erupt.annotation.sub_field.sub_edit.Search;
@@ -63,6 +62,7 @@ public class MailResource {
     @EruptField(
             views = @View(title = "状态"),
             edit = @Edit(title = "状态",
+                    notNull = true,
                     search = @Search,
                     type = EditType.CHOICE,
                     choiceType = @ChoiceType(

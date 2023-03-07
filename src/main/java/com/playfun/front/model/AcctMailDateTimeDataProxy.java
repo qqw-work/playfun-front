@@ -11,7 +11,7 @@ public class AcctMailDateTimeDataProxy implements DataProxy<AcctMail> {
             model.setTime(TimeUtil.now());
         }
 
-        if(model.getPubDay() == null || model.getPubDay().equals("")) {
+        if(model.getPub_day() == null || model.getPub_day().equals("")) {
             model.setPubDay(TimeUtil.today());
         }
     }
@@ -22,7 +22,7 @@ public class AcctMailDateTimeDataProxy implements DataProxy<AcctMail> {
             model.setTime(TimeUtil.now());
         }
 
-        if(model.getPubDay() == null || model.getPubDay().equals("")) {
+        if(model.getPub_day() == null || model.getPub_day().equals("")) {
             model.setPubDay(TimeUtil.today());
         }
     }

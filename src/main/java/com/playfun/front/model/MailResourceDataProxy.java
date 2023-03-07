@@ -19,9 +19,7 @@ public class MailResourceDataProxy implements DataProxy<MailResource> {
             AcctMail acctMail = new AcctMail(model.getAcctId(),
                     model.getTitle(), model.getPs(), model.getContent());
 
-            mailResourceDao.add(acctMail);
-
-            model.setMailId(mailResourceDao.queryMailId());
+            model.setMailId(mailResourceDao.add(acctMail));
         }
     }
 

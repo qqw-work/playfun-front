@@ -16,15 +16,10 @@ public class MailResourceDao {
     public Integer add(AcctMail acctMail) {
         String insertSql = "insert into acct_mail(mail_id, acct_id, title, time, pub_day, ps, content) " +
                 "values (:mail_id, :acct_id, :title, :time, :pub_day, :ps, :content)";
-        //eruptDao.persist(acctMail);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         eruptDao.getNamedParameterJdbcTemplate().update(insertSql, new BeanPropertySqlParameterSource(acctMail), keyHolder);
 
         return keyHolder.getKey().intValue();
-    }
-
-    public Integer queryMailId() {
-        return eruptDao.getJdbcTemplate().queryForObject("select last_insert_id()", Integer.class);
     }
 }
