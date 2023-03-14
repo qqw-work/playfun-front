@@ -17,18 +17,17 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Erupt(
-        name = "USDT提现",
-        orderBy = "UsdtApply.id desc"
+        name = "USDT充值",
+        orderBy = "UsdtCharge.id desc"
 )
-@Table(name = "usdt_apply")
+@Table(name = "usdt_charge")
 @Entity
-public class UsdtApply {
+public class UsdtCharge {
 
     @Id
     @Column(name = "id")
     @EruptField
     private String id;
-
 
     @EruptField(
             views = @View(title = "批次ID")
@@ -69,66 +68,43 @@ public class UsdtApply {
     private String out_wallet;
 
     @EruptField(
-            views = @View(title = "到账USDT")
+            views = @View(title = "收款Hash码")
+    )
+    private String hash_value;
+
+    @EruptField(
+            views = @View(title = "充值USDT")
     )
     private BigDecimal usdt;
 
     @EruptField(
-            views = @View(title = "花费HT")
+            views = @View(title = "到账HT")
     )
     private Integer ht;
 
     @EruptField(
             views = @View(title = "费用")
     )
-    private Integer fee;
+    private BigDecimal fee;
+
 
     @EruptField(
-            views = @View(title = "是否当日到账"),
-            edit = @Edit(title = "是否当日到账",
+            views = @View(title = "确认状态"),
+            edit = @Edit(title = "确认状态",
+                    notNull = true,
                     readonly = @Readonly,
                     type = EditType.CHOICE,
-                    choiceType = @ChoiceType(vl = {
-                            @VL(value = "0", label = "否"),
-                            @VL(value = "1", label = "是")
-                    }))
-    )
-    private Integer is_today;
-
-    @EruptField(
-            views = @View(title = "审核"),
-            edit = @Edit(title = "审核",
-                    notNull = true,
-                    search = @Search,
-                    type = EditType.CHOICE,
-                    choiceType = @ChoiceType(vl = {
-                            @VL(value = "0", label = "否"),
-                            @VL(value = "1", label = "是")
-                    }
+                    choiceType = @ChoiceType(
+                            vl = {
+                                    @VL(value = "0", label = "未确认"),
+                                    @VL(value = "1", label = "确认中"),
+                                    @VL(value = "2", label = "已充值"),
+                                    @VL(value = "3", label = "失败")
+                            }
                     )
             )
     )
-    private Integer verify;
-
-    @EruptField(
-            views = @View(title = "转账Hash")
-    )
-    private String hash_value;
-
-    @EruptField(
-            views = @View(title = "是否完成"),
-            edit = @Edit( title = "是否完成",
-                    readonly = @Readonly,
-                    search = @Search,
-                    type = EditType.CHOICE,
-                    choiceType = @ChoiceType(vl = {
-                            @VL(value = "0", label = "未完成"),
-                            @VL(value = "1", label = "已完成")
-                    })
-            )
-
-    )
-    private Integer done;
+    private Integer state;
 
     @EruptField(
             views = @View(title = "更新时间")
