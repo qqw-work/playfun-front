@@ -1,5 +1,6 @@
 package com.playfun.front.model;
 
+
 import xyz.erupt.annotation.Erupt;
 import xyz.erupt.annotation.EruptField;
 import xyz.erupt.annotation.sub_field.Edit;
@@ -17,34 +18,36 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Erupt(
-        name = "USDT提现",
-        orderBy = "UsdtApply.id desc"
+        name = "链端转账",
+        dataProxy = ChainTransferDataProxy.class,
+        orderBy = "ChainTransfer.id desc"
 )
-@Table(name = "usdt_apply")
+@Table(name = "chain_transfer")
 @Entity
-public class UsdtApply {
+public class ChainTransfer {
 
     @Id
     @Column(name = "id")
     @EruptField
-    private String id;
-
+    private int id;
 
     @EruptField(
-            views = @View(title = "批次ID")
+            views = @View(title = "批次ID"),
+            edit = @Edit(title = "批次ID", notNull = true, search = @Search)
     )
     private String batch_id;
 
-    @EruptField(
-            views = @View(title = "账户ID"),
-            edit = @Edit(title = "账户ID", notNull = true, search = @Search)
-    )
-    private String acct_id;
+    public String getChain_id() {
+        return chain_id;
+    }
+
+    public void setChain_id(String chain_id) {
+        this.chain_id = chain_id;
+    }
 
     @EruptField(
             views = @View(title = "链"),
             edit = @Edit(title = "链",
-                    notNull = true,
                     readonly = @Readonly,
                     type = EditType.CHOICE,
                     choiceType = @ChoiceType(
@@ -57,16 +60,9 @@ public class UsdtApply {
     private String chain_id;
 
     @EruptField(
-            views = @View(title = "付款钱包"),
-            edit = @Edit(title = "付款钱包", notNull = true, search = @Search)
+            views = @View(title = "收款钱包")
     )
-    private String in_wallet;
-
-    @EruptField(
-            views = @View(title = "收款钱包"),
-            edit = @Edit(title = "收款钱包", notNull = true, search = @Search)
-    )
-    private String out_wallet;
+    private String to_address;
 
     @EruptField(
             views = @View(title = "到账USDT")
@@ -74,33 +70,30 @@ public class UsdtApply {
     private BigDecimal usdt;
 
     @EruptField(
-            views = @View(title = "花费HT")
+            views = @View(title = "转账Hash")
     )
-    private Integer ht;
+    private String hash;
 
     @EruptField(
-            views = @View(title = "费用")
-    )
-    private Integer fee;
-
-    @EruptField(
-            views = @View(title = "是否当日到账"),
-            edit = @Edit(title = "是否当日到账",
-                    readonly = @Readonly,
-                    type = EditType.CHOICE,
-                    choiceType = @ChoiceType(vl = {
-                            @VL(value = "0", label = "否"),
-                            @VL(value = "1", label = "是")
-                    }))
-    )
-    private Integer is_today;
-
-    @EruptField(
-            views = @View(title = "是否拷贝"),
-            edit = @Edit( title = "是否拷贝",
-                    readonly = @Readonly,
+            views = @View(title = "启动"),
+            edit = @Edit( title = "启动",
                     search = @Search,
                     type = EditType.CHOICE,
+                    choiceType = @ChoiceType(vl = {
+                            @VL(value = "0", label = "未转"),
+                            @VL(value = "1", label = "请转")
+                    })
+            )
+
+    )
+    private Integer state;
+
+    @EruptField(
+            views = @View(title = "完成"),
+            edit = @Edit( title = "完成",
+                    search = @Search,
+                    type = EditType.CHOICE,
+                    readonly = @Readonly,
                     choiceType = @ChoiceType(vl = {
                             @VL(value = "0", label = "未完成"),
                             @VL(value = "1", label = "已完成")
@@ -115,19 +108,67 @@ public class UsdtApply {
     )
     private String uptime;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getBatch_id() {
         return batch_id;
     }
 
-    public String getChain_id() {
-        return chain_id;
+    public void setBatch_id(String batch_id) {
+        this.batch_id = batch_id;
     }
 
-    public String getIn_wallet() {
-        return in_wallet;
+    public String getTo_address() {
+        return to_address;
+    }
+
+    public void setTo_address(String to_address) {
+        this.to_address = to_address;
     }
 
     public BigDecimal getUsdt() {
         return usdt;
+    }
+
+    public void setUsdt(BigDecimal usdt) {
+        this.usdt = usdt;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public Integer getDone() {
+        return done;
+    }
+
+    public void setDone(Integer done) {
+        this.done = done;
+    }
+
+    public String getUptime() {
+        return uptime;
+    }
+
+    public void setUptime(String uptime) {
+        this.uptime = uptime;
     }
 }

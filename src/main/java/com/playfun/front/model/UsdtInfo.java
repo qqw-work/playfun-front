@@ -14,7 +14,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigInteger;
 
 @Erupt(
         name = "usdt信息管理",
@@ -64,6 +63,18 @@ public class UsdtInfo {
             edit = @Edit(title = "当天到账上限")
     )
     private Integer instant_transfer;
+
+    @EruptField(
+            views = @View(title = "合约地址"),
+            edit = @Edit(title = "合约地址", notNull = true)
+    )
+    private String contract_address;
+
+    @EruptField(
+            views = @View(title = "服务商地址"),
+            edit = @Edit(title = "服务商地址", notNull = true)
+    )
+    private String api_provider;
 
     @EruptField(
             views = @View(title = "状态"),

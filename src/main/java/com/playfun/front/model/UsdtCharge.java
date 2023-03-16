@@ -56,14 +56,14 @@ public class UsdtCharge {
     private String chain_id;
 
     @EruptField(
-            views = @View(title = "付款钱包"),
-            edit = @Edit(title = "付款钱包", notNull = true, search = @Search)
+            views = @View(title = "收款钱包"),
+            edit = @Edit(title = "收款钱包", notNull = true, search = @Search)
     )
     private String in_wallet;
 
     @EruptField(
-            views = @View(title = "收款钱包"),
-            edit = @Edit(title = "收款钱包", notNull = true, search = @Search)
+            views = @View(title = "付款钱包"),
+            edit = @Edit(title = "付款钱包", notNull = true, search = @Search)
     )
     private String out_wallet;
 
