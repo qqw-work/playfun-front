@@ -102,7 +102,7 @@ public class UsdtApply {
                     search = @Search,
                     type = EditType.CHOICE,
                     choiceType = @ChoiceType(vl = {
-                            @VL(value = "0", label = "未完成"),
+                            @VL(value = "0", label = "未处理"),
                             @VL(value = "1", label = "已完成")
                     })
             )
