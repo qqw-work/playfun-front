@@ -1,6 +1,7 @@
 package com.playfun.front.model;
 
 
+import com.playfun.front.chain.ChainOps;
 import xyz.erupt.annotation.Erupt;
 import xyz.erupt.annotation.EruptField;
 import xyz.erupt.annotation.sub_field.Edit;
@@ -11,11 +12,9 @@ import xyz.erupt.annotation.sub_field.sub_edit.ChoiceType;
 import xyz.erupt.annotation.sub_field.sub_edit.Search;
 import xyz.erupt.annotation.sub_field.sub_edit.VL;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 @Erupt(
         name = "链端转账",
@@ -25,6 +24,17 @@ import java.math.BigDecimal;
 @Table(name = "chain_transfer")
 @Entity
 public class ChainTransfer {
+
+    @Transient
+    public ChainOps chainOps;
+
+    public ChainOps getChainOps() {
+        return chainOps;
+    }
+
+    public void setChainOps(ChainOps chainOps) {
+        this.chainOps = chainOps;
+    }
 
     @Id
     @Column(name = "id")
@@ -68,6 +78,21 @@ public class ChainTransfer {
             views = @View(title = "到账USDT")
     )
     private BigDecimal usdt;
+
+    public BigInteger getGasLimit() {
+        return gasLimit;
+    }
+
+    public void setGasLimit(BigInteger gasLimit) {
+        this.gasLimit = gasLimit;
+    }
+
+    //todo 改为实体字段
+    @Transient
+    @EruptField(
+            edit = @Edit(title = "gasLimit")
+    )
+    private BigInteger gasLimit;
 
     @EruptField(
             views = @View(title = "转账Hash")

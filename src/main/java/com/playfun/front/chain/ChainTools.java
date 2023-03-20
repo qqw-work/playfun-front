@@ -36,4 +36,16 @@ public class ChainTools {
 
         return (BigInteger) decode.get(0).getValue();
     }
+
+    public static BigInteger getEther() {
+        return BigInteger.TEN.pow(18);
+    }
+
+    public static BigInteger getPWei() {
+        return BigInteger.TEN.pow(15);
+    }
+
+    public static BigInteger getGWei() {
+        return BigInteger.TEN.pow(9);
+    }
 }

@@ -2,6 +2,8 @@ package com.playfun.front.model;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
+import reactor.util.function.Tuple2;
+import reactor.util.function.Tuples;
 import xyz.erupt.jpa.dao.EruptDao;
 
 import javax.annotation.Resource;
@@ -33,6 +35,19 @@ public class ChainTransferDao {
         chainTransfer.setState(0);
         chainTransfer.setDone(0);
         chainTransfer.setUptime(TimeUtil.now());
+    }
+
+    public Tuple2<String, String> getChainInfo(String chainId) {
+        String sql = "select api_provider, contract_address from usdt_info where chain_id = "
+                + chainId + " and state = 0";
+        List<Map<String, Object>> maps = eruptDao.getJdbcTemplate().queryForList(sql);
+
+        if(maps.size() != 1) {
+            return Tuples.of("", "");
+        }
+
+        return Tuples.of((String)maps.get(0).get("api_provider"),
+                (String)maps.get(0).get("contract_address"));
     }
 
     public void updateChargeApply(String batchId) {
