@@ -51,6 +51,21 @@ public class HtJournal {
     private String act_code;
 
     @EruptField(
+            views = @View(title = "代币方向"),
+            edit = @Edit(title = "代币方向",
+                    notNull = true,
+                    readonly = @Readonly,
+                    type = EditType.CHOICE,
+                    choiceType = @ChoiceType(
+                            vl = {
+                                    @VL(value = "0", label = "北向"),
+                                    @VL(value = "1", label = "南向")
+                            }
+                    ))
+    )
+    private String direct;
+
+    @EruptField(
             views = @View(title = "订单ID")
     )
     private String order_id;
