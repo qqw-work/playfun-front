@@ -51,8 +51,8 @@ public class HtJournal {
     private String act_code;
 
     @EruptField(
-            views = @View(title = "代币方向"),
-            edit = @Edit(title = "代币方向",
+            views = @View(title = "流向"),
+            edit = @Edit(title = "流向",
                     notNull = true,
                     readonly = @Readonly,
                     type = EditType.CHOICE,

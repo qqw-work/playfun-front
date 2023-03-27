@@ -28,7 +28,7 @@ public class MailResource {
     @Id
     @EruptField(
             views = @View(title = "消息ID"),
-            edit = @Edit(title = "消息ID", notNull = true, search = @Search)
+            edit = @Edit(title = "消息ID", notNull = true, search = @Search, placeHolder = "创建新消息请填0，复用已有请填对应消息ID")
     )
     private Integer mail_id;
 

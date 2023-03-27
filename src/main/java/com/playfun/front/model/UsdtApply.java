@@ -75,7 +75,7 @@ public class UsdtApply {
     private BigDecimal usdt;
 
     @EruptField(
-            views = @View(title = "消耗HT")
+            views = @View(title = "已消耗HT")
     )
     private Integer ht;
 
