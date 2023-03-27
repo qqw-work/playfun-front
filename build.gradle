@@ -12,12 +12,29 @@ repositories {
     mavenCentral()
 }
 
+configurations.all {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation ('org.springframework.boot:spring-boot-starter') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.5'
+
+    //lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
 
     implementation 'xyz.erupt:erupt-upms:1.11.2'
     implementation 'xyz.erupt:erupt-security:1.11.2'
     implementation 'xyz.erupt:erupt-web:1.11.2'
+
+    //log4j
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: '2.7.5'
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.13.4'
 
     implementation 'mysql:mysql-connector-java:8.0.16'
 

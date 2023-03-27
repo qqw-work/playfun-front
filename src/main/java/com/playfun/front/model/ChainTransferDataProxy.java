@@ -1,6 +1,7 @@
 package com.playfun.front.model;
 
-import com.playfun.front.chain.ChainOps;
+import com.playfun.front.chain.ChainCredentials;
+import com.playfun.front.chain.ChainPayment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.util.function.Tuple2;
@@ -23,38 +24,44 @@ public class ChainTransferDataProxy implements DataProxy<ChainTransfer> {
     @Comment("数据编辑行为，对待编辑的数据做预处理")
     public void editBehavior(ChainTransfer model) {
         model.setGasLimit(BigInteger.valueOf(30000L));
-        System.out.println("before update: " + model.getGasLimit());
 
         String privateKey = "0x6ee66573e6ec9531886d1241ab7a06ad26d1c8b33c8796caf918742169a53d8e";
-        Tuple2<String, String> chainInfo = chainTransferDao.getChainInfo(model.getChain_id());
+        ChainCredentials credentials = new ChainCredentials(privateKey);
 
         //todo 余额检查
-        //todo 报错处理
-        model.setChainOps(new ChainOps(chainInfo.getT1(), chainInfo.getT2()));
-        String fromAddress = model.getChainOps().getCredentials(privateKey).getT2();
-        System.out.println("from address: " + fromAddress);
-        BigInteger nonce = model.getChainOps().nonce(fromAddress);
-        System.out.println("nonce: " + nonce);
-        BigInteger gasPrice = model.getChainOps().gasPrice();
-        System.out.println("gas price: " + gasPrice);
-        String func = model.getChainOps().functionHex(model.getTo_address(), model.getUsdt());
+        //todo 错误处理
+        Tuple2<String, String> chainInfo = chainTransferDao.getChainInfo(model.getChain_id());
+        ChainPayment payment = new ChainPayment(chainInfo.getT1(), chainInfo.getT2(), credentials.getCredentials());
+        model.setChainPayment(payment);
 
-        BigInteger gasLimit = model.getChainOps().estimateGas(fromAddress, nonce, gasPrice, func);
-        System.out.println("gas limit is : " + gasLimit);
-        model.setGasLimit(gasLimit);
+
+        payment.makeGasPrice();
+        payment.makeNonce();
+        payment.estimateGasLimit();
+        payment.transferFuncHex(model.getTo_address(), model.getUsdt());
+
+        if(payment.estGasLimitOk(model.getUsdt())) {
+            payment.estimateGasLimit();
+        }
+
+        model.setGasLimit(payment.getGasLimit());
     }
 
     @Comment("修改后")
     public void afterUpdate(ChainTransfer model) {
-        String hash = null;
+        String hash = "NeedTransFromChain";
         //请转+未完成
         if(model.getState() == 1 && model.getDone() == 0) {
             System.out.println("transfer: " + model.getBatch_id());
-            //todo 调用链端转账
-            hash = "chain_todo";
+            ChainPayment payment = model.getChainPayment();
+
+            payment.adjustGasLimit(model.getGasLimit());
+            if(payment.transOk(model.getUsdt())) {
+                //hash = payment.transTokenOut();
+            }
+
             //标记已完成
             chainTransferDao.updateChainTransfer(model.getBatch_id(), hash);
         }
-
     }
 }

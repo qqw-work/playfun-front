@@ -37,7 +37,7 @@ public class UsdtApply {
 
     @EruptField(
             views = @View(title = "账户ID"),
-            edit = @Edit(title = "账户ID", notNull = true, search = @Search)
+            edit = @Edit(title = "账户ID", readonly = @Readonly, search = @Search)
     )
     private String acct_id;
 
@@ -56,25 +56,26 @@ public class UsdtApply {
     )
     private String chain_id;
 
-    @EruptField(
-            views = @View(title = "付款钱包"),
-            edit = @Edit(title = "付款钱包", notNull = true, search = @Search)
-    )
+//    @EruptField(
+//            views = @View(title = "付款钱包"),
+//            edit = @Edit(title = "付款钱包", notNull = true, search = @Search)
+//    )
     private String in_wallet;
 
     @EruptField(
-            views = @View(title = "收款钱包"),
-            edit = @Edit(title = "收款钱包", notNull = true, search = @Search)
+            views = @View(title = "用户钱包"),
+            edit = @Edit(title = "用户钱包", readonly = @Readonly, search = @Search)
     )
     private String out_wallet;
 
     @EruptField(
-            views = @View(title = "到账USDT")
+            views = @View(title = "支付USDT"),
+            edit = @Edit(title = "支付USDT", readonly = @Readonly, search = @Search)
     )
     private BigDecimal usdt;
 
     @EruptField(
-            views = @View(title = "花费HT")
+            views = @View(title = "消耗HT")
     )
     private Integer ht;
 
@@ -96,9 +97,8 @@ public class UsdtApply {
     private Integer is_today;
 
     @EruptField(
-            views = @View(title = "是否拷贝"),
-            edit = @Edit( title = "是否拷贝",
-                    readonly = @Readonly,
+            views = @View(title = "是否完成"),
+            edit = @Edit( title = "是否完成",
                     search = @Search,
                     type = EditType.CHOICE,
                     choiceType = @ChoiceType(vl = {

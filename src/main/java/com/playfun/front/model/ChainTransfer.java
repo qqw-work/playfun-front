@@ -1,7 +1,9 @@
 package com.playfun.front.model;
 
 
-import com.playfun.front.chain.ChainOps;
+import com.playfun.front.chain.ChainPayment;
+import lombok.Getter;
+import lombok.Setter;
 import xyz.erupt.annotation.Erupt;
 import xyz.erupt.annotation.EruptField;
 import xyz.erupt.annotation.sub_field.Edit;
@@ -26,15 +28,9 @@ import java.math.BigInteger;
 public class ChainTransfer {
 
     @Transient
-    public ChainOps chainOps;
-
-    public ChainOps getChainOps() {
-        return chainOps;
-    }
-
-    public void setChainOps(ChainOps chainOps) {
-        this.chainOps = chainOps;
-    }
+    @Getter
+    @Setter
+    public ChainPayment chainPayment;
 
     @Id
     @Column(name = "id")
