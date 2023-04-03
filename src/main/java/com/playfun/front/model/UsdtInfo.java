@@ -41,7 +41,7 @@ public class UsdtInfo {
     private Integer rate;
 
     @EruptField(
-            views = @View(title = "提现费用"),
+            views = @View(title = "提现费用(HT)"),
             edit = @Edit(title = "提现费用")
     )
     private Integer fee;
